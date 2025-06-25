@@ -214,7 +214,7 @@ export default function Home() {
       try {
         await navigator.share({ title: "SmartCalc AI Calculation", text: shareText });
       } catch (error) {
-        // Fallback to clipboard if sharing fails
+        // Fallback to clipboard if sharing fails, without logging an error
         navigator.clipboard.writeText(shareText);
         toast({
           title: "Sharing not available",

@@ -217,8 +217,7 @@ export default function Home() {
         // Fallback to clipboard if sharing fails
         navigator.clipboard.writeText(shareText);
         toast({
-          variant: "destructive",
-          title: "Sharing failed",
+          title: "Sharing not available",
           description: "The calculation has been copied to your clipboard.",
         });
       }

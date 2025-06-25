@@ -260,9 +260,13 @@ export default function Home() {
         );
         break;
       case "business":
+        const businessTextBtnClass = "text-lg sm:text-xl";
         buttons.push(
-            'C', '(', ')', {label: 'DEL', value: 'backspace', className: actionBtnClass},
-            'EMI', 'GST', 'Discount', {label: '÷', value: '/', className: actionBtnClass},
+            'C', '(', ')', {label: 'DEL', value: 'backspace', className: `${actionBtnClass} ${businessTextBtnClass}`},
+            {label: 'EMI', value: 'EMI', className: businessTextBtnClass}, 
+            {label: 'GST', value: 'GST', className: businessTextBtnClass}, 
+            {label: 'Discount', value: 'Discount', className: businessTextBtnClass}, 
+            {label: '÷', value: '/', className: actionBtnClass},
             '7', '8', '9', {label: '×', value: '*', className: actionBtnClass},
             '4', '5', '6', {label: '-', value: '-', className: actionBtnClass},
             '1', '2', '3', {label: '+', value: '+', className: actionBtnClass},

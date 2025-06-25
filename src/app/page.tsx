@@ -172,12 +172,13 @@ export default function Home() {
         return;
       }
       
+      const { key } = event;
+      
       // Allow copy-paste
       if ((event.metaKey || event.ctrlKey) && key.toLowerCase() === 'c') {
         return;
       }
 
-      const { key } = event;
       let isHandled = true;
 
       if (/[0-9]/.test(key) || ["/", "*", "-", "+", "."].includes(key)) {
@@ -188,7 +189,7 @@ export default function Home() {
         calculateResult();
       } else if (key === "Backspace") {
         backspace();
-      } else if (key === "Escape" || key.toLowerCase() === 'c' || key === 'Delete') {
+      } else if (key.toLowerCase() === 'c' || key === 'Delete' || key === 'Escape') {
         clear();
       } else {
         isHandled = false;
@@ -205,14 +206,23 @@ export default function Home() {
     };
   }, [handleInput, calculateResult, backspace, clear]);
 
-  const handleShare = () => {
+  const handleShare = async () => {
     const shareText = result
       ? `${expression} = ${result}`
       : "Check out SmartCalc AI!";
     if (navigator.share) {
-      navigator
-        .share({ title: "SmartCalc AI Calculation", text: shareText })
-        .catch((error) => console.error("Error sharing:", error));
+      try {
+        await navigator.share({ title: "SmartCalc AI Calculation", text: shareText });
+      } catch (error) {
+        console.error("Error sharing:", error);
+        // Fallback to clipboard if sharing fails
+        navigator.clipboard.writeText(shareText);
+        toast({
+          variant: "destructive",
+          title: "Sharing failed",
+          description: "The calculation has been copied to your clipboard.",
+        });
+      }
     } else {
       navigator.clipboard.writeText(shareText);
       toast({ title: "Copied to clipboard!" });
@@ -361,7 +371,7 @@ export default function Home() {
         );
         break;
       case "business":
-        const businessTextBtnClass = "text-sm sm:text-base";
+        const businessTextBtnClass = "text-sm text-center leading-normal";
         buttons.push(
           "C",
           "(",
